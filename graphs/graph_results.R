@@ -81,7 +81,7 @@ all <- rbind( unsafeMem, forFunc, forMem )
 
 graph_data( all, "benches", find_maxy( all ) )
 
-graph_data( jnaFunc, "JNA", find_maxy( jnaFunc ) )
+# graph_data( jnaFunc, "JNA", find_maxy( jnaFunc ) )
 
 dev.off()
 
