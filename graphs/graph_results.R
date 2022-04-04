@@ -8,12 +8,9 @@ library(extrafont)
 library(stringr)
 library(cowplot)
 
+# font_import()
 
-
-
-font_import()
-
-cpu_type <- "Intel i7-8700K"
+cpu_type <- "AMD Ryzen 5 5600G"
 #cpu_type <- "AMD Ryzen 5 5600G"
 
 find_maxy <- function( runs ) {
@@ -74,43 +71,17 @@ graph_data <- function(pdata,lang_name,max_y) {
   
 }
 
-rust_atomic <- find_best("../runs/rust_atomic*.csv","Rust")
-rust_resume <- find_best("../runs/rust_async_resume*.csv","Rust-Resume")
-rust_suspend <- find_best("../runs/rust_async_suspend*.csv","Rust-Suspend")
-rust_callback <- find_best("../runs/rust_callback*.csv","Rust-Callback")
+jnaFunc <- find_best("../runs/janFunc*.csv","JNA_Func")
+unsafeMem <- find_best("../runs/unsafe*.csv","Unsafe_Mem")
+forFunc <- find_best("../runs/foreignFunc*.csv","Foreign_Func")
+forMem <- find_best("../runs/ForeignMem*.csv","Foreign_Mem")
 
-all <- rbind( rust_atomic, rust_resume, rust_suspend, rust_callback )
+# all <- rbind( janFunc, unsafeMem, forFunc, forMem )
+all <- rbind( unsafeMem, forFunc, forMem )
 
-graph_data( all, "Rust", find_maxy( all ) ) 
+graph_data( all, "benches", find_maxy( all ) )
 
-
-zig_atomic <- find_best("../runs/zig_atomic*.csv","Zig")
-zig_resume <- find_best("../runs/zig_resume*.csv","Zig-Resume")
-zig_suspend <- find_best("../runs/zig_suspend*.csv","Zig-Suspend")
-zig_callback <- find_best("../runs/zig_callback*.csv","Zig-Callback")
-
-all <- rbind( zig_atomic, zig_resume, zig_suspend, zig_callback )
-
-graph_data( all, "Zig", find_maxy( all ) ) 
-
-cpp_atomic <- find_best("../runs/cpp_atomic*.csv","C++")
-cpp_resume <- find_best("../runs/cpp_resume*.csv","C++-Resume")
-cpp_suspend <- find_best("../runs/cpp_suspend*.csv","C++-Suspend")
-cpp_callback <- find_best("../runs/cpp_suspend*.csv","C++-Callback")
-
-all <- rbind( cpp_atomic, cpp_resume, cpp_suspend, cpp_callback )
-
-graph_data( all, "C++", find_maxy( all ) ) 
-
-
-kotlin_atomic <- find_best("../runs/kotlin_atomic*.csv","Kotlin")
-kotlin_resume <- find_best("../runs/kotlin_resume*.csv","Kotlin-Resume")
-kotlin_suspend <- find_best("../runs/kotlin_suspend*.csv","Kotlin-Suspend ")
-kotlin_callback <- find_best("../runs/kotlin_callback*.csv","Kotlin-Callback ")
-
-all <- rbind( kotlin_atomic, kotlin_resume, kotlin_suspend, kotlin_callback )
-
-graph_data( all, "Kotlin", find_maxy( all ) ) 
+graph_data( jnaFunc, "JNA", find_maxy( jnaFunc ) )
 
 dev.off()
 
